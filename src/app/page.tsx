@@ -2,8 +2,6 @@
 
 import React, { useEffect } from 'react';
 
-// Dinamis import ScrollReveal
-// import ScrollReveal from 'scrollreveal'; 
 
 import { Container } from '@/app/components/Container';
 import { Header } from '@/app/components/Header';
@@ -16,7 +14,6 @@ import { Contact } from '@/app/components/sections/Contact';
 export default function Home() {
 
   useEffect(() => {
-    // Fungsi async untuk memuat ScrollReveal secara dinamis
     const initScrollReveal = async () => {
       try {
         const ScrollRevealModule = await import('scrollreveal');

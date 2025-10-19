@@ -1,4 +1,7 @@
+"use client";
+
 import React from 'react';
+import { motion, Variants } from 'framer-motion';
 import {
   FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaPython, FaGitAlt, FaDocker, FaFigma
 } from 'react-icons/fa';
@@ -24,31 +27,59 @@ const stackItems = [
   { icon: <FaFigma />, name: 'Figma', color: '#F24E1E' },
 ];
 
+
+const gridContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    }
+  }
+};
+
+const gridItemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut"
+    }
+  }
+};
+
 export function Stack() {
   return (
     <section id="stack" className="py-[120px] border-b border-border">
-      <h2 className="text-[20px] font-medium text-subtle mb-[50px] tracking-tight text-center reveal-top">
-        Technologies I Use
+      <h2 className="text-[20px] font-medium text-subtle mb-[50px] tracking-tight reveal-top">
+        Technologies that I Use
       </h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+        variants={gridContainerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {stackItems.map((item) => (
-          <div
+          <motion.div
             key={item.name}
             className="group flex flex-col items-center justify-center gap-3 p-6 bg-card border border-border rounded-lg transition-all duration-300 hover:border-subtle hover:-translate-y-1"
             style={{ '--brand-color': item.color } as React.CSSProperties}
+            variants={gridItemVariants}
           >
             <div className="text-4xl text-subtle transition-colors duration-300 group-hover:text-[var(--brand-color)]">
               {item.icon}
             </div>
-
             <span className="text-sm font-medium text-subtle transition-colors duration-300 group-hover:text-primary">
               {item.name}
             </span>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
