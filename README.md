@@ -1,15 +1,10 @@
-Tentu, ini adalah draf `README.md` baru yang komprehensif untuk proyek Anda, yang ditulis dalam bahasa Inggris seperti yang Anda minta. Draf ini dibuat berdasarkan analisis file-file dalam *repository* Anda.
-
------
-
 # Muhammad Raihan's Personal Portfolio
 
 This is the source code for my personal portfolio website, built to showcase my projects, skills, and professional background.
 
-The live version can be viewed at: **[Tautkan URL Deploy Anda Di Sini]**
+The live version can be viewed at: **[Raihan's Portfolio](https://raihan-jiwoo.vercel.app/)**
 
-\![A preview of the portfolio project, showing the hero section]
-*(Sebaiknya tambahkan screenshot proyek Anda di sini)*
+![Hero Section](./public/hero.png)
 
 ## ✨ Features
 
@@ -158,5 +153,3 @@ Contributions are welcome\! If you find a bug or have an idea for an improvement
 This project is licensed under the **MIT License**. See the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
 -----
-
-*This README was generated based on the project repository.*
