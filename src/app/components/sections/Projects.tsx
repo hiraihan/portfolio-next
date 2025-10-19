@@ -13,7 +13,7 @@ const projects = [
     title: "Simple-Mindmap",
     description: "A simple Python-based mindmap application for creating, organizing, and storing ideas visually with a minimal interface and add/remove node features.",
     href: "https://github.com/hiraihan/simple-mindmap",
-    tags: ["Python", "Tkinter", "Matplotlib"], // Menambahkan Matplotlib
+    tags: ["Python", "Tkinter", "Matplotlib"],
     imageUrl: "/simple-mindmap.png"
   }
 ];

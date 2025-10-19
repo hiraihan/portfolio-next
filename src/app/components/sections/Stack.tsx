@@ -6,7 +6,8 @@ import {
   FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaPython, FaGitAlt, FaDocker, FaFigma
 } from 'react-icons/fa';
 import {
-  SiTailwindcss, SiNextdotjs, SiTypescript, SiVercel, SiPostgresql, SiMongodb
+  SiTailwindcss, SiNextdotjs, SiTypescript, SiVercel, SiPostgresql, SiMongodb,
+  SiGithub
 } from 'react-icons/si';
 
 const stackItems = [
@@ -20,7 +21,7 @@ const stackItems = [
   { icon: <FaNodeJs />, name: 'Node.js', color: '#6CC24A' },
   { icon: <FaPython />, name: 'Python', color: '#4B8BBE' },
   { icon: <SiPostgresql />, name: 'PostgreSQL', color: '#336791' },
-  { icon: <SiMongodb />, name: 'MongoDB', color: '#4DB33D' },
+  { icon: <SiGithub />, name: 'GitHub', color: 'var(--color-heading)' },
   { icon: <FaGitAlt />, name: 'Git', color: '#F1502F' },
   { icon: <FaDocker />, name: 'Docker', color: '#1D63ED' },
   { icon: <SiVercel />, name: 'Vercel', color: 'var(--color-heading)' },
@@ -58,7 +59,7 @@ export function Stack() {
       </h2>
 
       <motion.div
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6  cursor-pointer"
         variants={gridContainerVariants}
         initial="hidden"
         whileInView="visible"

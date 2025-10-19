@@ -38,12 +38,12 @@ export function Header() {
       `}</style>
 
       <header className="header fixed top-0 left-0 w-full px-[40px] py-[25px] flex justify-between items-center z-50 transition-all duration-300 md:px-8">
-        <a href="#home" className="text-[20px] font-bold text-heading no-underline tracking-tighter">Home</a>
+        <a href="#home" className="text-[20px] font-bold text-heading no-underline tracking-tighter cursor-pointer">Home</a>
 
         <nav className="navbar hidden md:flex items-center">
-          <a href="#work" className="text-[15px] font-medium text-subtle no-underline ml-[30px] transition-colors duration-300 hover:text-primary">Project</a>
-          <a href="#stack" className="text-[15px] font-medium text-subtle no-underline ml-[30px] transition-colors duration-300 hover:text-primary">Stack</a>
-          <a href="#contact" className="text-[15px] font-medium text-subtle no-underline ml-[30px] transition-colors duration-300 hover:text-primary">Contact</a>
+          <a href="#work" className="text-[15px] font-medium text-subtle no-underline ml-[30px] transition-colors duration-300 hover:text-primary cursor-pointer">Project</a>
+          <a href="#stack" className="text-[15px] font-medium text-subtle no-underline ml-[30px] transition-colors duration-300 hover:text-primary cursor-pointer">Stack</a>
+          <a href="#contact" className="text-[15px] font-medium text-subtle no-underline ml-[30px] transition-colors duration-300 hover:text-primary cursor-pointer">Contact</a>
           <div className="w-px h-5 bg-border mx-6" />
           <ThemeToggle />
         </nav>

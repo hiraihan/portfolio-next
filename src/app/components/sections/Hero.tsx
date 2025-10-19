@@ -57,9 +57,9 @@ export function Hero() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ delay: 0.2 }}
           >
-            <a href="https://github.com/hiraihan" target="_blank" rel="noopener noreferrer" className="text-[16px] font-medium text-subtle no-underline transition-all duration-300 hover:text-primary hover:-translate-y-0.5">GitHub</a>
-            <a href="https://www.linkedin.com/in/muhammad-raihan-335294264/" target="_blank" rel="noopener noreferrer" className="text-[16px] font-medium text-subtle no-underline transition-all duration-300 hover:text-primary hover:-translate-y-0.5">LinkedIn</a>
-            <a href="mailto:241111075@student.unu-jogja.unu.ac.id" className="text-[16px] font-medium text-subtle no-underline transition-all duration-300 hover:text-primary hover:-translate-y-0.5">Email</a>
+            <a href="https://github.com/hiraihan" target="_blank" rel="noopener noreferrer" className="text-[16px] font-medium text-subtle no-underline transition-all duration-300 hover:text-primary hover:-translate-y-0.5 cursor-pointer">GitHub</a>
+            <a href="https://www.linkedin.com/in/muhammad-raihan-335294264/" target="_blank" rel="noopener noreferrer" className="text-[16px] font-medium text-subtle no-underline transition-all duration-300 hover:text-primary hover:-translate-y-0.5 cursor-pointer">LinkedIn</a>
+            <a href="mailto:241111075@student.unu-jogja.unu.ac.id" className="text-[16px] font-medium text-subtle no-underline transition-all duration-300 hover:text-primary hover:-translate-y-0.5 cursor-pointer">Email</a>
           </motion.div>
         </div>
 
