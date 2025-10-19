@@ -1,0 +1,129 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+/* 1. Definisi Variabel Warna Semantik */
+@layer base {
+  :root {
+    /* Tema Light (Default) */
+    --color-bg: #FFFFFF;
+    --color-text-primary: #111111;
+    --color-text-subtle: #555555;
+    --color-text-heading: #000000;
+    --color-border: #EAEAEA;
+    --color-card-bg: #F9F9F9;
+    --color-accent: #000000;
+    --color-accent-text: #FFFFFF;
+  }
+
+  .dark {
+    /* Tema Dark */
+    --color-bg: #0A0A0A;
+    --color-text-primary: #EAEAEA;
+    --color-text-subtle: #888888;
+    --color-text-heading: #FFFFFF;
+    --color-border: #222222;
+    --color-card-bg: #111111;
+    --color-accent: #FFFFFF;
+    --color-accent-text: #000000;
+  }
+
+  /* 2. Style Dasar (Base Styles) */
+  
+  /* Pastikan layout mengisi tinggi layar */
+  html, body, #__next {
+    @apply h-full;
+  }
+  
+  html {
+    /* Muluskan transisi warna */
+    @apply transition-colors duration-200;
+
+    scroll-behavior: smooth;
+  }
+
+  /* Sembunyikan kursor asli */
+  /* Style untuk form */
+  input,
+  textarea {
+    @apply bg-transparent border-none border-b border-border;
+    padding: 24px 0;
+    font-size: 16px;
+    @apply text-primary transition-colors duration-200;
+  }
+
+  input:focus,
+  textarea:focus {
+    @apply outline-none border-heading;
+  }
+}
+
+/* 3. Definisi Tema Tailwind */
+@theme {
+  --color-background: var(--color-bg);
+  --color-primary: var(--color-text-primary);
+  --color-subtle: var(--color-text-subtle);
+  --color-heading: var(--color-text-heading);
+  --color-border: var(--color-border);
+  --color-card: var(--color-card-bg);
+  --color-accent: var(--color-accent);
+  --color-accent-text: var(--color-accent-text);
+
+  --font-sans: var(--font-inter), sans-serif;
+  
+  /* Kelas untuk Next/Vercel (hitam/putih) */
+  --color-brand-monochrome: var(--color-text-heading);
+}
+
+/* 4. Style Komponen Kustom */
+@layer components {
+  /* Header saat di-scroll */
+  .header.scrolled {
+    @apply py-4 bg-background/70 border-b border-border;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* 5. Style Efek Glow (tidak perlu di layer) */
+.project-card {
+  position: relative;
+  /* Atur variabel CSS untuk posisi mouse */
+  --mouse-x: 50%; 
+  --mouse-y: 50%;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  /* Sedikit lebih kecil dari kartu untuk efek border */
+  inset: -1px; 
+  border-radius: 0.5rem; /* Sesuai rounded-lg */
+  
+  /* Gradien border yang mengikuti mouse */
+  background: radial-gradient(
+    350px circle at var(--mouse-x) var(--mouse-y), 
+    var(--color-subtle) 0%, /* Warna terang di dekat kursor */
+    transparent 100% /* Transparan di kejauhan */
+  );
+  
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1; /* Di belakang kartu */
+}
+
+.project-card:hover::before {
+  opacity: 0.5; /* Opasitas lebih rendah agar halus */
+}
+
+.project-card > * {
+  /* Konten tetap di atas */
+  position: relative;
+  z-index: 1;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
