@@ -1,21 +1,18 @@
-// src/components/ThemeToggle.tsx
 "use client";
 
 import { useTheme } from 'next-themes';
-import { FaSun, FaMoon } from 'react-icons/fa'; // Kita sudah punya react-icons
+import { FaSun, FaMoon } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  // Mencegah hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    // Render placeholder agar layout tidak "lompat"
     return <div className="w-[20px] h-[20px]" />;
   }
 

@@ -1,4 +1,3 @@
-// src/components/sections/Hero.tsx
 "use client";
 
 import Image from 'next/image';
@@ -64,26 +63,22 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Kolom Gambar */}
         <div className="flex-shrink-0">
           <motion.div
-            // HAPUS hover:scale-105 dari sini
-            className="relative w-[220px] h-[220px] rounded-full overflow-hidden border-2 border-border grayscale transition-all duration-300 hover:grayscale-0" // <-- HAPUS hover:scale-105
+            className="relative w-[220px] h-[220px] rounded-full overflow-hidden border-2 border-border grayscale transition-all duration-300 hover:grayscale-0"
             style={{ y: imageY }}
           >
             <Image
               src="/raihan.png"
               alt="Foto Muhammad Raihan"
               layout="fill"
-              // TAMBAHKAN hover:scale-105 ke sini (dan pastikan ada transition)
-              className="object-cover transition-transform duration-300 group-hover:scale-105" // <-- TAMBAHKAN INI
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
               priority
             />
           </motion.div>
         </div>
 
       </div>
-      {/* Optional: Elemen dekoratif background */}
       <div className="absolute inset-0 z-0 opacity-10 dark:opacity-20">
          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl animate-blob"></div>
          <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-purple-500 rounded-full filter blur-3xl animate-blob animation-delay-2000"></div>

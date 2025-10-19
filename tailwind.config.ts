@@ -8,12 +8,12 @@ const config: Config = {
     './src/app/globals.css',
   ],
   darkMode: 'class',
-  theme: { // Pastikan ini di dalam 'theme'
-    extend: { // Pastikan ini di dalam 'extend'
-      animation: { // Definisi animasi baru
+  theme: {
+    extend: {
+      animation: {
         blob: 'blob 7s infinite',
       },
-      keyframes: { // Keyframes untuk animasi blob
+      keyframes: {
         blob: {
           '0%': { transform: 'translate(0px, 0px) scale(1)' },
           '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
