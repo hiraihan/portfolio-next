@@ -54,7 +54,7 @@ export function Contact() {
 
       <form
         id="contact-form"
-        action="https://formspree.io/f/GANTI_DENGAN_ID_UNIK_ANDA" // <-- GANTI INI
+        action="https://formspree.io/f/xnngrjae"
         method="POST"
         onSubmit={handleSubmit}
       >
