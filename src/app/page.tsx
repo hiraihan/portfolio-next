@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
-
+import React, { useState } from 'react';
 
 import { Container } from '@/app/components/Container';
 import { Header } from '@/app/components/Header';
@@ -10,38 +9,19 @@ import { Hero } from '@/app/components/sections/Hero';
 import { Projects } from '@/app/components/sections/Projects';
 import { Stack } from '@/app/components/sections/Stack';
 import { Contact } from '@/app/components/sections/Contact';
+import { Modal } from '@/app/components/Modal';
+import { TodoList } from '@/app/components/sections/TodoList';
 
 export default function Home() {
+  const [isTodoModalOpen, setIsTodoModalOpen] = useState(false);
 
-  useEffect(() => {
-    const initScrollReveal = async () => {
-      try {
-        const ScrollRevealModule = await import('scrollreveal');
-        const ScrollReveal = ScrollRevealModule.default;
+  const openTodoModal = () => setIsTodoModalOpen(true);
+  const closeTodoModal = () => setIsTodoModalOpen(false);
 
-        const sr = ScrollReveal({
-          distance: '30px',
-          duration: 1000,
-          easing: 'cubic-bezier(0.5, 0, 0, 1)',
-          reset: false
-        });
-        
-        sr.reveal('.reveal-top', { origin: 'top', interval: 100, delay: 200 });
-        sr.reveal('.reveal-bottom', { origin: 'bottom', delay: 400 });
-        sr.reveal('.reveal-item', { origin: 'bottom', interval: 100, delay: 200 });
-      
-      } catch (error) {
-        console.error("Gagal memuat ScrollReveal:", error);
-      }
-    };
-
-    initScrollReveal();
-
-  }, []); 
 
   return (
     <>
-      <Header />
+      <Header onOpenTodoClick={openTodoModal} />
       <main>
         <Container>
           <Hero />
@@ -51,6 +31,14 @@ export default function Home() {
         </Container>
       </main>
       <Footer />
+
+      <Modal
+        isOpen={isTodoModalOpen}
+        onClose={closeTodoModal}
+        title="My To-Do List"
+      >
+        <TodoList />
+      </Modal>
     </>
   );
 }
