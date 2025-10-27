@@ -7,8 +7,19 @@ export function Contact() {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [message, setMessage] = useState('');
 
+  // 1. Ambil Formspree URL dari environment variable
+  const formSpreeUrl = process.env.NEXT_PUBLIC_FORMSPREE_URL;
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
+    // 2. Tambahkan pemeriksaan jika URL tidak ada
+    if (!formSpreeUrl) {
+      setStatus('error');
+      setMessage('Formulir tidak dikonfigurasi. Harap atur NEXT_PUBLIC_FORMSPREE_URL.');
+      return;
+    }
+
     setStatus('loading');
     setMessage('');
 
@@ -16,7 +27,8 @@ export function Contact() {
     const data = new FormData(form);
 
     try {
-      const response = await fetch(form.action, {
+      // 3. Gunakan variabel 'formSpreeUrl'
+      const response = await fetch(formSpreeUrl, {
         method: form.method,
         body: data,
         headers: {
@@ -54,7 +66,7 @@ export function Contact() {
 
       <form
         id="contact-form"
-        action="https://formspree.io/f/xnngrjae"
+        // 'action' tidak lagi diperlukan di sini karena di-handle oleh onSubmit
         method="POST"
         onSubmit={handleSubmit}
       >
@@ -68,7 +80,8 @@ export function Contact() {
           <button
             type="submit"
             className="px-[30px] py-[15px] text-[16px] font-medium text-accent-text bg-accent border border-accent cursor-pointer transition-all duration-300 hover:bg-transparent hover:text-accent reveal-item disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={status === 'loading'}
+            // 4. Disable tombol jika URL tidak ada
+            disabled={status === 'loading' || !formSpreeUrl}
           >
             {status === 'loading' ? 'Sending...' : 'Send Message'}
           </button>
