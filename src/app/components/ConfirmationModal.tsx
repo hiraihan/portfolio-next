@@ -31,7 +31,6 @@ export function ConfirmationModal({
       role="dialog"
       aria-labelledby="modal-title"
     >
-      {/* Konten Modal */}
       <div
         className="bg-card text-primary p-6 rounded-lg shadow-xl w-full max-w-sm border border-border"
         onClick={handleModalContentClick}
@@ -43,7 +42,7 @@ export function ConfirmationModal({
         <div className="flex justify-end gap-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-subtle bg-transparent border border-border rounded hover:bg-border transition-colors"
+            className="px-4 py-2 text-sm font-medium text-subtle bg-transparent border border-border rounded hover:bg-border transition-colors cursor-pointer"
           >
             Cancel
           </button>
@@ -52,7 +51,7 @@ export function ConfirmationModal({
               onConfirm();
               onClose();
             }}
-            className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded hover:bg-red-700 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-red-600 rounded hover:bg-red-700 transition-colors cursor-pointer"
           >
             Delete
           </button>

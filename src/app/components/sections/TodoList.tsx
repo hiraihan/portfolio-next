@@ -1,30 +1,25 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { ConfirmationModal } from '../ConfirmationModal'; // Pastikan path import ini benar
+import { ConfirmationModal } from '../ConfirmationModal';
 
-// Definisikan tipe untuk item to-do
+
 type TodoItem = {
   id: number;
   text: string;
   completed: boolean;
-  createdAt: number; // Timestamp waktu dibuat
+  createdAt: number;
 };
 
-// Kunci unik untuk localStorage
 const LOCAL_STORAGE_KEY = 'my-portfolio-todos';
 
 export function TodoList() {
-  // State untuk menyimpan daftar to-do, diinisialisasi dari localStorage
   const [todos, setTodos] = useState<TodoItem[]>(() => {
-    // Fungsi ini hanya dijalankan sekali saat komponen pertama kali dirender
-    if (typeof window !== 'undefined') { // Pastikan localStorage tersedia (client-side)
+    if (typeof window !== 'undefined') {
       const savedTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (savedTodos) {
         try {
-          // Parse data JSON
           const parsedTodos = JSON.parse(savedTodos);
-          // Pastikan data lama memiliki properti createdAt, beri default jika tidak
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return parsedTodos.map((todo: any) => ({
             ...todo,
@@ -32,52 +27,45 @@ export function TodoList() {
           }));
         } catch (e) {
           console.error("Error parsing todos from localStorage", e);
-          return []; // Kembali ke array kosong jika ada error parsing
+          return [];
         }
       }
     }
-    return []; // Default jika tidak ada data tersimpan atau bukan client-side
+    return [];
   });
 
-  // State untuk input teks to-do baru
   const [inputText, setInputText] = useState('');
 
-  // State untuk fitur edit
-  const [editingId, setEditingId] = useState<number | null>(null); // ID todo yang sedang diedit
-  const [editingText, setEditingText] = useState(''); // Teks sementara saat mengedit
+  const [editingId, setEditingId] = useState<number | null>(null); 
+  const [editingText, setEditingText] = useState('');
 
-  // State untuk modal konfirmasi hapus
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState<{ id: number; text: string } | null>(null);
 
-  // Efek untuk menyimpan ke localStorage setiap kali 'todos' berubah
   useEffect(() => {
-    if (typeof window !== 'undefined') { // Hanya jalankan di client-side
+    if (typeof window !== 'undefined') {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
     }
-  }, [todos]); // Dependency array: efek ini berjalan setiap kali 'todos' berubah
+  }, [todos]);
 
-  // Handler untuk input teks baru
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
 
-  // Handler untuk menambahkan to-do baru
   const handleAddTodo = (e: React.FormEvent) => {
-    e.preventDefault(); // Mencegah submit form bawaan
-    if (inputText.trim() === '') return; // Jangan tambahkan jika kosong
+    e.preventDefault();
+    if (inputText.trim() === '') return;
 
     const newTodo: TodoItem = {
-      id: Date.now(), // ID unik sederhana
+      id: Date.now(),
       text: inputText,
       completed: false,
-      createdAt: Date.now(), // Set waktu saat ini
+      createdAt: Date.now(),
     };
-    setTodos([...todos, newTodo]); // Tambahkan ke state
-    setInputText(''); // Kosongkan input
+    setTodos([...todos, newTodo]);
+    setInputText('');
   };
 
-  // Handler untuk mengubah status selesai/belum selesai
   const handleToggleComplete = (id: number) => {
     setTodos(
       todos.map(todo =>
@@ -86,89 +74,72 @@ export function TodoList() {
     );
   };
 
-  // Handler untuk meminta konfirmasi sebelum menghapus
   const requestDeleteTodo = (id: number, text: string) => {
-    setTodoToDelete({ id, text }); // Simpan detail todo yang akan dihapus
-    setIsModalOpen(true); // Buka modal konfirmasi
+    setTodoToDelete({ id, text });
+    setIsModalOpen(true);
   };
 
-  // Handler yang dijalankan saat penghapusan dikonfirmasi di modal
   const confirmDeleteTodo = () => {
     if (todoToDelete) {
-      setTodos(todos.filter(todo => todo.id !== todoToDelete.id)); // Hapus dari state
-      // Jika todo yang sedang diedit dihapus, batalkan mode edit
+      setTodos(todos.filter(todo => todo.id !== todoToDelete.id));
       if (editingId === todoToDelete.id) {
         setEditingId(null);
         setEditingText('');
       }
     }
-    // State modal ditutup oleh komponen ConfirmationModal
-    setTodoToDelete(null); // Reset state todo yang akan dihapus
+    setTodoToDelete(null);
   };
 
-  // Handler untuk membatalkan penghapusan (menutup modal)
   const cancelDeleteTodo = () => {
     setIsModalOpen(false);
     setTodoToDelete(null);
   };
 
-  // Handler untuk memulai mode edit
   const handleStartEdit = (id: number, currentText: string) => {
     setEditingId(id);
-    setEditingText(currentText); // Isi input edit dengan teks saat ini
+    setEditingText(currentText);
   };
 
-  // Handler untuk membatalkan mode edit
   const handleCancelEdit = () => {
     setEditingId(null);
     setEditingText('');
   };
 
-   // Handler untuk menyimpan hasil edit
   const handleSaveEdit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault(); // Mencegah submit jika dari form
-    // Batalkan edit jika ID tidak valid atau teks kosong
+    if (e) e.preventDefault();
     if (editingId === null || editingText.trim() === '') {
        handleCancelEdit();
        return;
     };
 
-    // Update teks todo yang sesuai di state
     setTodos(
       todos.map(todo =>
         todo.id === editingId ? { ...todo, text: editingText.trim() } : todo
       )
     );
-    handleCancelEdit(); // Keluar dari mode edit
+    handleCancelEdit();
   };
 
-  // Handler untuk perubahan input saat mengedit
   const handleEditingInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditingText(e.target.value);
   };
 
-  // Fungsi helper untuk format timestamp
   const formatTimestamp = (timestamp: number) => {
     const date = new Date(timestamp);
-    // Format: DD/MM/YYYY HH:MM (sesuaikan locale jika perlu)
     return `${date.toLocaleDateString('id-ID')} ${date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
   };
 
-  // Memoized sorted todos (belum selesai di atas, lalu terbaru di atas)
   const sortedTodos = useMemo(() => {
     return [...todos].sort((a, b) => {
       if (a.completed !== b.completed) {
-        return a.completed ? 1 : -1; // false (0) comes before true (1)
+        return a.completed ? 1 : -1;
       }
-      return b.createdAt - a.createdAt; // Newest first
+      return b.createdAt - a.createdAt;
     });
   }, [todos]);
 
-  // Render komponen
   return (
-    // Menggunakan div sebagai wrapper utama, bukan <section>
-    <div className="pt-2"> {/* Sedikit padding atas opsional */}
-      {/* Form untuk menambah todo baru */}
+    <div className="pt-2">
       <form onSubmit={handleAddTodo} className="flex gap-4 mb-8">
         <input
           type="text"
@@ -186,37 +157,29 @@ export function TodoList() {
         </button>
       </form>
 
-      {/* Daftar To-Do */}
       <ul className="space-y-4">
         {sortedTodos.map(todo => (
           <li
             key={todo.id}
-            // Highlight item yang sedang diedit
             className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-card border border-border rounded-lg ${editingId === todo.id ? 'ring-2 ring-accent' : ''}`}
           >
             {editingId === todo.id ? (
-              // Tampilan saat mode Edit aktif
               <form onSubmit={handleSaveEdit} className="flex-grow flex items-center gap-2 w-full">
                  <input
                     type="text"
                     value={editingText}
                     onChange={handleEditingInputChange}
-                    className="flex-grow border-b border-accent px-1 py-0 bg-transparent focus:outline-none" // Input edit
-                    autoFocus // Fokus otomatis
-                    // Simpan saat fokus hilang (blur) dengan sedikit delay
+                    className="flex-grow border-b border-accent px-1 py-0 bg-transparent focus:outline-none"
+                    autoFocus
                     onBlur={() => setTimeout(handleSaveEdit, 150)}
                     aria-label={`Edit task: ${todo.text}`}
                  />
-                 {/* Tombol Simpan Edit */}
                  <button type="submit" className="text-green-600 hover:text-green-800 p-1" aria-label="Save changes">✓</button>
-                 {/* Tombol Batal Edit */}
                  <button type="button" onClick={handleCancelEdit} className="text-gray-600 hover:text-gray-800 p-1" aria-label="Cancel edit">×</button>
               </form>
             ) : (
-              // Tampilan Normal (tidak sedang diedit)
               <>
                 <div className="flex items-center gap-3 flex-grow min-w-0"> {/* min-w-0 untuk wrap teks */}
-                  {/* Checkbox */}
                   <input
                     type="checkbox"
                     checked={todo.completed}
@@ -224,7 +187,6 @@ export function TodoList() {
                     className="form-checkbox h-5 w-5 text-accent border-subtle rounded focus:ring-accent cursor-pointer flex-shrink-0"
                     aria-labelledby={`todo-text-${todo.id}`}
                   />
-                  {/* Teks Todo dan Timestamp */}
                   <div className="flex flex-col min-w-0"> {/* min-w-0 */}
                     <span
                       id={`todo-text-${todo.id}`}
@@ -237,9 +199,7 @@ export function TodoList() {
                     </span>
                   </div>
                 </div>
-                {/* Tombol Aksi (Edit & Hapus) */}
                 <div className="flex gap-2 items-center flex-shrink-0 mt-2 sm:mt-0 self-start sm:self-center">
-                  {/* Tombol Edit */}
                   <button
                     onClick={() => handleStartEdit(todo.id, todo.text)}
                     aria-label={`Edit task: ${todo.text}`}
@@ -247,7 +207,6 @@ export function TodoList() {
                   >
                     &#9998;
                   </button>
-                  {/* Tombol Hapus (memicu modal konfirmasi) */}
                   <button
                     onClick={() => requestDeleteTodo(todo.id, todo.text)}
                     aria-label={`Delete task: ${todo.text}`}
@@ -260,19 +219,17 @@ export function TodoList() {
             )}
           </li>
         ))}
-        {/* Pesan jika daftar kosong */}
         {todos.length === 0 && (
            <p className="text-subtle text-center py-4">No tasks yet. Add one above!</p>
         )}
       </ul>
 
-      {/* Render Modal Konfirmasi Hapus */}
       <ConfirmationModal
         isOpen={isModalOpen}
-        onClose={cancelDeleteTodo} // Handler untuk tombol Cancel/backdrop
-        onConfirm={confirmDeleteTodo} // Handler untuk tombol Delete
+        onClose={cancelDeleteTodo} 
+        onConfirm={confirmDeleteTodo} 
         title="Confirm Deletion"
-        message={`Are you sure you want to delete this task?\n"${todoToDelete?.text || ''}"`} // Pesan konfirmasi
+        message={`Are you sure you want to delete this task?\n"${todoToDelete?.text || ''}"`}
       />
     </div>
   );
