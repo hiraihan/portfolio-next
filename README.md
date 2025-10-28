@@ -119,7 +119,7 @@ hiraihan/portfolio-next/
 ├── src/
 │   ├── app/
 │   │   ├── components/
-│   │   │   ├── sections/     # Contains Hero, Projects, Stack, Contact
+│   │   │   ├── sections/     # Contains Hero, Projects, Stack, Contact, TodoList
 │   │   │   ├── ClientLayout.tsx # Smooth scroll (Lenis) wrapper
 │   │   │   ├── Container.tsx    # Max-width container component
 │   │   │   ├── Header.tsx       # Site header and navigation
